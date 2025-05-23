@@ -41,10 +41,28 @@ ROC de SVM est meilleure que ROC de logistic (comparaison avec l'AUC)
 
 
 
+# 🎯 Comment savoir si le Gini est utile ?
+* L’indice de Gini mesure l’impureté :
+
+* Plus il est petit, plus les classes sont pures (bien séparées).
+
+* Ce qui compte, c’est la baisse de l’indice de Gini après la séparation.
+
+# ✅ Séparation utile selon Gini si :
+* Gini après split < Gini avant split
+* ➡️ Il n’y a pas de valeur seuil fixe.
+* ➡️ Même une petite diminution signifie une amélioration, donc la séparation est bénéfique.
 
 
+# ⚠️ Pourquoi le taux d’erreur peut être trompeur ?
+Le taux d’erreur regarde seulement la proportion d’erreurs (éléments mal classés selon la classe majoritaire). Il ne tient pas compte du niveau de mélange entre les classes.
 
+# ❌ Exemple typique :
+Deux groupes : l’un très pur, l’autre très mélangé
 
+Le taux d’erreur peut rester identique avant/après
+
+Mais Gini, lui, capte la baisse de mélange
 
 
 
