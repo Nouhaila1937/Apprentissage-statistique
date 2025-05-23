@@ -40,6 +40,83 @@ ROC de SVM est meilleure que ROC de logistic (comparaison avec l'AUC)
 ![image](https://github.com/user-attachments/assets/0f39de65-df4f-4e0b-b486-58370a69e393)
 
 
+# 🧠 Critères de séparation en arbre de décision
+## ✅ 1. Indice de Gini
+Formule : ![image](https://github.com/user-attachments/assets/0ac6519e-5b84-468d-8f95-2e874b57e335)
+
+Valeurs :
+
+- Gini = 0 : ensemble pur (une seule classe)
+
+- Gini ≈ 1 : classes très mélangées
+
+## ❌ 2. Taux d'erreur
+Formule :
+![image](https://github.com/user-attachments/assets/4109c632-c32e-40f9-8e25-7c9283978b2f)
+
+- Taux d’erreur est la proportion de la classe majoritaire.
+
+- Limite : ne détecte pas les mélanges subtils entre classes.
+
+- Séparation utile si :
+Erreur_apres_split < Erreur_avant_split
+
+## 🔥 3. Entropie (Shannon)
+- Formule :
+![image](https://github.com/user-attachments/assets/209f4fa2-ddbf-4b96-82e9-0e59e5ca0dc9)
+- Valeurs :
+
+Entropie = 0 : ensemble pur
+
+Entropie max = log₂(C) si les classes sont équilibrées
+
+Séparation utile si :
+Entropie apres split<Entropie avant split
+## 📈 4. Gain d'information
+Formule :
+Gain=Impurete avant split−Impurete apres split
+
+
+Peut être appliqué avec :
+- Gini → Gain de Gini
+- Entropie → Information Gain
+
+➡️ Plus le **gain est élevé**, meilleure est la séparation.
+
+---
+
+## ✅ Règles générales à retenir
+
+| Critère        | Formule                        | Bonne séparation ?         |
+|----------------|--------------------------------|----------------------------|
+| Gini           | `1 - ∑ pᵢ²`                     | Gini_après < Gini_avant    |
+| Entropie       | `- ∑ pᵢ * log₂(pᵢ)`             | Entropie_après < Entropie_avant |
+| Taux d’erreur  | `1 - max(pᵢ)`                   | Erreur_après < Erreur_avant|
+| Gain           | `Impureté_avant - Impureté_après` | Plus il est élevé, mieux c'est |
+
+---
+
+# 🎯 À retenir sur Gini et taux d’erreur
+
+## ✅ Gini
+- Mesure l’impureté.
+- Plus il est **faible**, plus le nœud est **pur**.
+- Une **petite baisse** de Gini = **split bénéfique**.
+
+## ❌ Taux d’erreur
+- Ignore les mélanges subtils.
+- Peut être **trompeur** : un nœud très mélangé peut avoir le même taux d’erreur qu’un nœud presque pur.
+
+---
+
+## 📝 Exemple typique
+- Groupe 1 : 100% classe A → erreur = 0
+- Groupe 2 : 51% classe A, 49% classe B → erreur = 0.49  
+→ Le taux d’erreur ne capte **pas** le niveau de mélange, mais **Gini, oui**.
+
+---
+
+
 
 # 🎯 Comment savoir si le Gini est utile ?
 * L’indice de Gini mesure l’impureté :
@@ -55,14 +132,15 @@ ROC de SVM est meilleure que ROC de logistic (comparaison avec l'AUC)
 
 
 # ⚠️ Pourquoi le taux d’erreur peut être trompeur ?
-Le taux d’erreur regarde seulement la proportion d’erreurs (éléments mal classés selon la classe majoritaire). Il ne tient pas compte du niveau de mélange entre les classes.
+* Le taux d’erreur regarde seulement la proportion d’erreurs (éléments mal classés selon la classe majoritaire). Il ne tient pas compte du niveau de mélange entre les classes.
 
 # ❌ Exemple typique :
-Deux groupes : l’un très pur, l’autre très mélangé
+* Deux groupes : l’un très pur, l’autre très mélangé
 
-Le taux d’erreur peut rester identique avant/après
+* Le taux d’erreur peut rester identique avant/après
 
-Mais Gini, lui, capte la baisse de mélange
+* Mais Gini, lui, capte la baisse de mélange
+
 
 
 
